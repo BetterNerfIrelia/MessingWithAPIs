@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        table, th, td {
+            border: 1px ;
+            border-collapse: collapse;
+            padding: 15px;
+            background-color: cornflowerblue;
+        }
+        p{
+            color: white;
+            font-size: 30px;
+        }
+    </style>
     <title>Weather</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
@@ -9,7 +21,6 @@
             $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dornbirn&units=metric&APPID=b8cc30f4d3861fdd45ffb03e7c8dc4aa\n", function (json) {
                 var call = (JSON.stringify(json));
                 getTemperature(call);
-                getDescription(call);
                 getIcon(call);
                 getResult(call);
             });
@@ -21,7 +32,7 @@
             var pressure = string.search(("pressure"));
 
             var temperature =  string.substring(temp +6, pressure -2);
-            document.getElementById("temperature").innerHTML = "Temperatur: " + temperature + " Grad";
+            document.getElementById("temperature").innerHTML = temperature + "&deg";
         }
 
         function getDescription(string) {
@@ -29,7 +40,7 @@
             var icon = string.search(("icon"));
 
             var description =  string.substring(desc +14, icon -3);
-            document.getElementById("description").innerHTML = "Description: " + description;
+            document.getElementById("description").innerHTML = description;
         }
 
         function getIcon(string){
@@ -41,18 +52,22 @@
         }
 
         function getResult(string) {
-            document.getElementById("result").innerHTML = "Hose: Lange Hose"
+            document.getElementById("trousers").src ="jeans.png";
         }
-
     </script>
 </head>
-<body>
-<button id="getIt" onclick="getJSON()">Get JSON</button>
-<p id="temperature"></p>
-<p id="description"></p>
-<img id="icon" src="" width="50px"><img>
-<p id="hose"></p>
-<p id="result"></p>
+<body onload="getJSON()">
+<table align="center">
+    <tr align="center">
+        <td><p id="temperature"></p></td>
+        <td><img id="icon" src="" width="100px"><img></td>
+    </tr>
+    <tr align="center">
+<td><p>Trousers:</p></td>
+        <td><img id="trousers" src="" width="100px"><img></td>
+    </tr>
+    <tr>
+</table>
 </body>
 </html>
 
