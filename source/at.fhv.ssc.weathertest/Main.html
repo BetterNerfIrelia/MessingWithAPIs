@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Weather</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+
+        function getJSON() {
+            $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dornbirn&units=metric&APPID=b8cc30f4d3861fdd45ffb03e7c8dc4aa\n", function (json) {
+                var call = (JSON.stringify(json));
+                document.getElementById("result").innerHTML = "API-Call:" + call;
+                getTempIndex(call);
+            });
+        }
+
+        function getTempIndex(string) {
+            var result = string.search("temp");
+            document.getElementById("temp").innerHTML = result;
+        }
+
+    </script>
+</head>
+<body>
+<button id="getIt" onclick="getJSON()">Get JSON</button>
+<p id="temp"></p>
+<p id="result"></p>
+</body>
+</html>
+
+
+<!--
+
+-----TEMP-----
+n < 20.00
+
+-----DESCRIPTION-----
+clear sky SHORT
+few clouds SHORT
+scattered clouds SHORT
+broken clouds LONG
+shower rain LONG
+rain LONG
+thunderstorm LONG
+snow LONG
+mist LONG
+
+-->
