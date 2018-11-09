@@ -8,21 +8,50 @@
         function getJSON() {
             $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dornbirn&units=metric&APPID=b8cc30f4d3861fdd45ffb03e7c8dc4aa\n", function (json) {
                 var call = (JSON.stringify(json));
-                document.getElementById("result").innerHTML = "API-Call:" + call;
-                getTempIndex(call);
+                getTemperature(call);
+                getDescription(call);
+                getIcon(call);
+                getResult(call);
             });
         }
 
-        function getTempIndex(string) {
-            var result = string.search("temp");
-            document.getElementById("temp").innerHTML = "Temp-Index: " + result;
+        //TODO: Refactor with RegEx.
+        function getTemperature(string) {
+            var temp = string.search(("temp"));
+            var pressure = string.search(("pressure"));
+
+            var temperature =  string.substring(temp +6, pressure -2);
+            document.getElementById("temperature").innerHTML = "Temperatur: " + temperature + " Grad";
+        }
+
+        function getDescription(string) {
+            var desc = string.search(("description"));
+            var icon = string.search(("icon"));
+
+            var description =  string.substring(desc +14, icon -3);
+            document.getElementById("description").innerHTML = "Description: " + description;
+        }
+
+        function getIcon(string){
+            var ico = string.search(("icon"));
+
+            var icon = string.substring(ico+7, ico+10);
+            var url = "http://openweathermap.org/img/w/" + icon + ".png";
+            document.getElementById("icon").src =url;
+        }
+
+        function getResult(string) {
+            document.getElementById("result").innerHTML = "Hose: Lange Hose"
         }
 
     </script>
 </head>
 <body>
 <button id="getIt" onclick="getJSON()">Get JSON</button>
-<p id="temp"></p>
+<p id="temperature"></p>
+<p id="description"></p>
+<img id="icon" src="" width="50px"><img>
+<p id="hose"></p>
 <p id="result"></p>
 </body>
 </html>
